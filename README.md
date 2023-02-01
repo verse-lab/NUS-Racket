@@ -1,3 +1,26 @@
+# NUSketeers Racket
+
+A fork of Racket-lang that enables fuzzing of macros!
+
+## Setting up
+
+1. Clone the repository.
+
+2. Make it
+
+```
+make
+```
+
+3. Add `./racket/bin` to your path:
+
+```
+export PATH="$(pwd)/racket/bin:$PATH"
+```
+
+
+# Old Readme
+
 [Racket](https://racket-lang.org/) is a general-purpose programming
 language and an ecosystem for language-oriented programming.
 

@@ -14,6 +14,7 @@
                      "opt.rkt"
                      "txlift.rkt")
          "keywords.rkt"
+         "fuzz.rkt"
          racket/syntax
          racket/stxparam
          syntax/stx

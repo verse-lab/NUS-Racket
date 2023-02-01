@@ -1,7 +1,8 @@
 #lang racket/base
 (require (for-syntax racket/base
                      syntax/parse
-                     "private/sc.rkt"))
+                     "private/sc.rkt")
+         "private/fuzz.rkt")
 (provide define-syntax-parse-rule
          define-syntax-parser
          (rename-out [define-syntax-parse-rule define-simple-macro])
