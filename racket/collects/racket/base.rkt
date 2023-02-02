@@ -4,7 +4,8 @@
             define-syntax)
            (rename-out
             [fuzz:define-syntax define-syntax]
-            [macro-bindings fuzz:macro-bindings])
+            [macro-bindings fuzz:macro-bindings]
+            [store-macro-binding fuzz:store-macro-binding])
            fuzz:current-macro-id)
   (require "fuzz.rkt")
   (module reader syntax/module-reader
