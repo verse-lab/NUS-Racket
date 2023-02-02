@@ -3,7 +3,8 @@
             (all-from-out "private/base.rkt")
             define-syntax)
            (rename-out
-            [fuzz:define-syntax define-syntax])
+            [fuzz:define-syntax define-syntax]
+            [macro-bindings fuzz:macro-bindings])
            fuzz:current-macro-id)
   (require "fuzz.rkt")
   (module reader syntax/module-reader
