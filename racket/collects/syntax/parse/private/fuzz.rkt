@@ -17,8 +17,8 @@
   (format "macro-fuzz-~a" module-name))
 
 (define (save-syntax-object variable-reference stx-datum)
-  (hash-update! macro-definitions (variable-reference->module-name variable-reference)
-                (lambda (data) (cons stx-datum data)) '()))
+  (hash-update! macro-definitions (fuzz:current-macro-id)
+                (lambda (data) (cons (list variable-reference stx-datum) data)) '()))
 
 (define-syntax (save-at-toplevel stx)
   (syntax-local-lift-expression
