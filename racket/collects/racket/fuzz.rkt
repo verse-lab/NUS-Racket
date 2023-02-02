@@ -5,7 +5,8 @@
   (provide
    macro-bindings
    fuzz:current-macro-id
-   fuzz:define-syntax)
+   fuzz:define-syntax
+   store-macro-binding)
   ;; maps macro names (tuple of module-name, macro-name) to id
   (define macro-bindings (make-hash))
   (define macro-id 0)
@@ -24,8 +25,7 @@
       [(_ (name args ...) body ...)
        #'(begin
            (store-macro-binding (#%variable-reference) 'name)
-           (define-syntax (name args ...) body ...)
-           )]
+           (define-syntax (name args ...) body ...))]
       [(_ name body ...)
       #'(begin
            (store-macro-binding (#%variable-reference) 'name)
