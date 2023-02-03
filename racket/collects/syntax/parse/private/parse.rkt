@@ -183,6 +183,8 @@
 (define-syntax (syntax-parse stx)
   (syntax-case stx ()
     [(syntax-parse stx-expr . clauses)
+     (syntax-local-lift-expression
+      #`(fuzz:save-syntax-object (#%variable-reference) '#,(syntax->datum stx) #,(fuzz:current-macro-id)))
      (quasisyntax/loc stx
        (let ([x (datum->syntax #f stx-expr)])
          (with ([this-syntax x])

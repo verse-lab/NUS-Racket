@@ -1,7 +1,7 @@
 #lang racket/base
 
 (require (for-syntax racket/base))
-(provide save-syntax-object macro-definitions)
+(provide fuzz:save-syntax-object macro-definitions)
 
 (define macro-definitions (make-hash))
 
@@ -16,11 +16,6 @@
          (path-replace-extension name ""))]))
   (format "macro-fuzz-~a" module-name))
 
-(define (save-syntax-object variable-reference stx-datum)
-  (hash-update! macro-definitions (fuzz:current-macro-id)
+(define (fuzz:save-syntax-object variable-reference stx-datum id)
+  (hash-update! macro-definitions id
                 (lambda (data) (cons (list variable-reference stx-datum) data)) '()))
-
-(define-syntax (save-at-toplevel stx)
-  (syntax-local-lift-expression
-   #`(save-syntax-object (#%variable-reference) '#,(syntax->datum stx)))
-  #'(void))
