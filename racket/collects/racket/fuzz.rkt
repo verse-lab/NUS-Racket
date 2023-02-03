@@ -4,34 +4,30 @@
                "private/qq-and-or.rkt"))
   (provide
    macro-bindings
-   (for-syntax fuzz:current-macro-id)
    fuzz:define-syntax
    (rename-out [store-macro-binding fuzz:internal-store-macro-binding])
    fuzz:store-macro-binding)
 
-  ;; maps macro names (tuple of module-name, macro-name) to id
+  ;; maps macro names (tuple of module-name, macro-name) to the syntax data
   (define macro-bindings (make-hash))
-  (define-for-syntax macro-id 0)
-  (define-for-syntax (fuzz:current-macro-id) macro-id)
-  (define-for-syntax (next-macro-id) (begin (set! macro-id (+ macro-id 1)) macro-id))
 
-  (define (store-macro-binding variable-reference macro-name id)
+  (define (store-macro-binding variable-reference macro-name data)
     (hash-set! macro-bindings
                   (list (variable-reference->module-source variable-reference) macro-name)
-                  id))
+                  data))
 
   (define-syntax (fuzz:store-macro-binding stx)
     (syntax-case stx ()
-      [(_ macro-name)
-       #`(store-macro-binding (#%variable-reference) macro-name #,(next-macro-id))]))
+      [(_ macro-name macro-syntax)
+       #`(store-macro-binding (#%variable-reference) macro-name macro-syntax)]))
 
   (define-syntax (fuzz:define-syntax stx)
     (syntax-case stx ()
       [(_ (name args ...) body ...)
-       #'(begin
-           (fuzz:store-macro-binding 'name)
+       #`(begin
+           (fuzz:store-macro-binding 'name '#,(syntax->datum stx))
            (define-syntax (name args ...) body ...))]
       [(_ name body ...)
-      #'(begin
-           (fuzz:store-macro-binding 'name)
+      #`(begin
+           (fuzz:store-macro-binding 'name '#,(syntax->datum stx))
            (define-syntax name body ...))])))

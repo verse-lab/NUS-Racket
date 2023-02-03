@@ -1,8 +1,7 @@
 #lang racket/base
 (require racket/lazy-require
          "keywords.rkt"
-         "residual.rkt"
-         "fuzz.rkt")
+         "residual.rkt")
 
 (lazy-require-syntax
  ["parse.rkt"

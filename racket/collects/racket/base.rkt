@@ -6,7 +6,6 @@
             [fuzz:define-syntax define-syntax]
             [macro-bindings fuzz:macro-bindings])
            fuzz:store-macro-binding
-           (for-syntax fuzz:current-macro-id)
            fuzz:internal-store-macro-binding)
   (require "fuzz.rkt")
   (module reader syntax/module-reader
