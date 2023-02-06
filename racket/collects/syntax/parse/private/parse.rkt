@@ -32,6 +32,7 @@
          syntax-parser/template
          parser/rhs
          define-eh-alternative-set
+         syntax-parse-body-escape
          (for-syntax rhs->parser))
 
 (begin-for-syntax
@@ -74,6 +75,9 @@
                                    #f))
                        (define-values (parser)
                          (parser/rhs name formals attrs the-rhs-expr #,splicing? #,stx)))))))])))
+
+ ;; parameter to store the syntax to which a variable is bound 
+ (define syntax-parse-body-escape (make-parameter (lambda (_) #t)))
 
 (define-syntax define-syntax-class
   (lambda (stx) (tx:define-*-syntax-class stx #f)))
@@ -184,6 +188,7 @@
     [(syntax-parse stx-expr . clauses)
      (quasisyntax/loc stx
        (let ([x (datum->syntax #f stx-expr)])
+         ((syntax-parse-body-escape) (quote #,stx))
          (with ([this-syntax x])
            (parse:clauses x clauses body-sequence #,((make-syntax-introducer) stx)))))]))
 

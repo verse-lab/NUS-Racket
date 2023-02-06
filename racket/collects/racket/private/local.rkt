@@ -59,7 +59,7 @@
                               [(define-values . rest)
                                (raise-syntax-error
                                 #f "ill-formed definition" stx d)]
-                              [(fuzz:store-macro-binding _) (list)]
+                              [(fuzz:store-macro-binding . _) (list)]
                               [(define-syntaxes (id ...) rhs)
                                (let ([ids (syntax->list (syntax (id ...)))])
                                  (check-ids d ids)
