@@ -48,7 +48,7 @@
                                                    defn
                                                    id)))
                                               ids))])
-                            (syntax-case d (define-values define-syntaxes begin fuzz:store-macro-binding)
+                            (syntax-case d (define-values define-syntaxes begin)
                               [(begin defn ...)
                                (loop (syntax->list (syntax (defn ...))))]
                               [(define-values (id ...) body)
@@ -59,7 +59,6 @@
                               [(define-values . rest)
                                (raise-syntax-error
                                 #f "ill-formed definition" stx d)]
-                              [(fuzz:store-macro-binding . _) (list)]
                               [(define-syntaxes (id ...) rhs)
                                (let ([ids (syntax->list (syntax (id ...)))])
                                  (check-ids d ids)
