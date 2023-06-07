@@ -198,6 +198,7 @@
      (quasisyntax/loc stx
        (lambda (x)
          (let ([x (datum->syntax #f x)])
+           ((syntax-parse-body-escape) (quote #,stx))
            (with ([this-syntax x])
              (parse:clauses x clauses body-sequence #,((make-syntax-introducer) stx))))))]))
 
@@ -207,6 +208,7 @@
      (quasisyntax/loc stx
        (lambda (x)
          (let ([x (datum->syntax #f x)])
+           ((syntax-parse-body-escape) (quote #,stx))
            (with ([this-syntax x])
              (parse:clauses x clauses one-template ctx)))))]))
 
